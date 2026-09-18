@@ -4,6 +4,20 @@ A full-stack geospatial analytics dashboard for managing and visualizing carbon 
 
 ---
 
+## 🚀 Live Demo & Links
+
+| Service | URL |
+|---|---|
+| **Live Web App (Vercel)** | [https://darukaa-earth-project.vercel.app](https://darukaa-earth-project.vercel.app) |
+| **Backend API (Render)** | [https://darukaa-earth-api-hgfz.onrender.com](https://darukaa-earth-api-hgfz.onrender.com) |
+| **Interactive API Docs (Swagger)** | [https://darukaa-earth-api-hgfz.onrender.com/docs](https://darukaa-earth-api-hgfz.onrender.com/docs) |
+| **API Health Check** | [https://darukaa-earth-api-hgfz.onrender.com/health](https://darukaa-earth-api-hgfz.onrender.com/health) |
+
+### 🔑 Demo Credentials
+- **Email:** `demo@darukaa.earth`
+- **Password:** `demo1234`
+*(Or register a new account on the live app)*
+
 ## Features
 
 - **User Authentication** — Register and login with JWT-based auth
