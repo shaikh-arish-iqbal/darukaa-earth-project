@@ -311,23 +311,4 @@ Both jobs run in parallel. CI configuration: [`.github/workflows/ci.yml`](.githu
 | Mock analytics data | PDF explicitly allows datasets/mocks. Real values need satellite data pipelines |
 | GeoAlchemy2 | Maps Python objects to PostGIS geometry types cleanly without raw SQL for model definitions |
 
----
 
-## Limitations & Future Improvements
-
-- Analytics data is mock/demo — real implementation needs satellite imagery APIs (e.g., Google Earth Engine)
-- No pagination on project/site lists
-- No password reset flow
-- No site editing (only create)
-- Deployment uses free tiers which may have cold-start delays
-- Tests don't cover geospatial operations (SQLite doesn't support PostGIS)
-
----
-
-## Repository Access
-
-If the repository is private, grant access to:
-- ankita.dasgupta@darukaa.com
-- harsh.kumar@darukaa.com
-- utkarsh.gauniyal@darukaa.com
-- guneet.mutreja@darukaa.com
