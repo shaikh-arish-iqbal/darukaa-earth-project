@@ -314,16 +314,3 @@ Both jobs run in parallel. CI configuration: [`.github/workflows/ci.yml`](.githu
 
 ---
 
-## Design & Technical Decisions
-
-| Decision | Reason |
-|---|---|
-| FastAPI over Flask/Django | FastAPI has automatic Pydantic validation, OpenAPI docs at /docs, and async support — all useful for a hackathon demo |
-| Chart.js over Highcharts | Chart.js is free (MIT license). Highcharts requires a commercial license |
-| SQLite for tests | Avoids PostGIS dependency in CI, keeps tests fast and simple |
-| JWT in localStorage | Simpler for demo; httpOnly cookies are more secure but add complexity |
-| `key=drawMode` on MapView | Forces Mapbox to fully re-initialize when switching between view/draw modes, avoiding state conflicts |
-| Mock analytics data | PDF explicitly allows datasets/mocks. Real values need satellite data pipelines |
-| GeoAlchemy2 | Maps Python objects to PostGIS geometry types cleanly without raw SQL for model definitions |
-
-
