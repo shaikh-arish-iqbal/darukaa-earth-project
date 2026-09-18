@@ -1,7 +1,8 @@
-from pydantic import BaseModel
-from datetime import datetime
-from typing import Optional, Any
 import uuid
+from datetime import datetime
+from typing import Any, Optional
+
+from pydantic import BaseModel
 
 
 class GeoJSONGeometry(BaseModel):
@@ -10,6 +11,7 @@ class GeoJSONGeometry(BaseModel):
     When the user draws a polygon on Mapbox, the drawing library returns
     a GeoJSON Feature. We extract just the 'geometry' part (type + coordinates).
     """
+
     type: str  # e.g. "Polygon"
     coordinates: Any  # nested list of [lon, lat] pairs
 

@@ -64,7 +64,12 @@ export default function AddSiteModal({ geometry, onSave, onCancel }) {
             />
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={onCancel} disabled={saving}>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onCancel}
+              disabled={saving}
+            >
               Cancel
             </button>
             <button type="submit" className="btn btn-primary" disabled={saving}>

@@ -45,46 +45,36 @@ api.interceptors.response.use(
 // ── Auth ──────────────────────────────────────────────────────────────────────
 
 export const authApi = {
-  register: (name, email, password) =>
-    api.post("/auth/register", { name, email, password }),
+  register: (name, email, password) => api.post("/auth/register", { name, email, password }),
 
-  login: (email, password) =>
-    api.post("/auth/login", { email, password }),
+  login: (email, password) => api.post("/auth/login", { email, password }),
 
-  me: () =>
-    api.get("/auth/me"),
+  me: () => api.get("/auth/me"),
 };
 
 // ── Projects ──────────────────────────────────────────────────────────────────
 
 export const projectsApi = {
-  list: () =>
-    api.get("/projects"),
+  list: () => api.get("/projects"),
 
-  create: (name, description) =>
-    api.post("/projects", { name, description }),
+  create: (name, description) => api.post("/projects", { name, description }),
 
-  get: (id) =>
-    api.get(`/projects/${id}`),
+  get: (id) => api.get(`/projects/${id}`),
 
-  delete: (id) =>
-    api.delete(`/projects/${id}`),
+  delete: (id) => api.delete(`/projects/${id}`),
 };
 
 // ── Sites ──────────────────────────────────────────────────────────────────────
 
 export const sitesApi = {
-  list: (projectId) =>
-    api.get(`/projects/${projectId}/sites`),
+  list: (projectId) => api.get(`/projects/${projectId}/sites`),
 
   create: (projectId, name, description, geometry) =>
     api.post(`/projects/${projectId}/sites`, { name, description, geometry }),
 
-  get: (siteId) =>
-    api.get(`/sites/${siteId}`),
+  get: (siteId) => api.get(`/sites/${siteId}`),
 
-  getAnalytics: (siteId) =>
-    api.get(`/sites/${siteId}/analytics`),
+  getAnalytics: (siteId) => api.get(`/sites/${siteId}/analytics`),
 };
 
 export default api;

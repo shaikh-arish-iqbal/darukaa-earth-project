@@ -29,10 +29,10 @@ import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN || "";
 
 export default function MapView({
-  sites = [],          // Array of site objects with GeoJSON geometry
-  drawMode = false,    // If true, enable Mapbox Draw for polygon creation
-  onPolygonDrawn,      // Callback: called with the drawn GeoJSON geometry
-  onSiteClick,         // Callback: called with the site object when user clicks a polygon
+  sites = [], // Array of site objects with GeoJSON geometry
+  drawMode = false, // If true, enable Mapbox Draw for polygon creation
+  onPolygonDrawn, // Callback: called with the drawn GeoJSON geometry
+  onSiteClick, // Callback: called with the site object when user clicks a polygon
 }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
@@ -138,8 +138,8 @@ export default function MapView({
       <div ref={mapContainerRef} className="map-container" />
       {drawMode && (
         <div className="map-instructions">
-          🖊 Click the polygon tool (top-right) to start drawing a site boundary.
-          Double-click to finish.
+          🖊 Click the polygon tool (top-right) to start drawing a site boundary. Double-click to
+          finish.
         </div>
       )}
     </div>

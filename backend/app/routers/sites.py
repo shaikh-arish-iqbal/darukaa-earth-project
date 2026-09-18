@@ -1,17 +1,18 @@
 import json
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import text
 from sqlalchemy.orm import Session
-from typing import List
 
+from app.auth.jwt import get_current_user
 from app.database import get_db
-from app.models.user import User
+from app.models.analytics import SiteAnalytics
 from app.models.project import Project
 from app.models.site import Site
-from app.models.analytics import SiteAnalytics
-from app.schemas.site import SiteCreate, SiteResponse
+from app.models.user import User
 from app.schemas.analytics import AnalyticsRecord, AnalyticsResponse
-from app.auth.jwt import get_current_user
+from app.schemas.site import SiteCreate, SiteResponse
 
 router = APIRouter(tags=["Sites"])
 
@@ -49,10 +50,14 @@ def list_sites(
     current_user: User = Depends(get_current_user),
 ):
     """List all sites for a project. Verifies the project belongs to the current user."""
-    project = db.query(Project).filter(
-        Project.id == project_id,
-        Project.user_id == current_user.id,
-    ).first()
+    project = (
+        db.query(Project)
+        .filter(
+            Project.id == project_id,
+            Project.user_id == current_user.id,
+        )
+        .first()
+    )
 
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
@@ -60,7 +65,9 @@ def list_sites(
     return [_site_to_response(site, db) for site in project.sites]
 
 
-@router.post("/projects/{project_id}/sites", response_model=SiteResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/projects/{project_id}/sites", response_model=SiteResponse, status_code=status.HTTP_201_CREATED
+)
 def create_site(
     project_id: str,
     body: SiteCreate,
@@ -78,10 +85,14 @@ def create_site(
     5. SQLAlchemy stores it in the GEOMETRY(Polygon, 4326) column
     6. When reading back, ST_AsGeoJSON() converts it back to GeoJSON for the frontend
     """
-    project = db.query(Project).filter(
-        Project.id == project_id,
-        Project.user_id == current_user.id,
-    ).first()
+    project = (
+        db.query(Project)
+        .filter(
+            Project.id == project_id,
+            Project.user_id == current_user.id,
+        )
+        .first()
+    )
 
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")

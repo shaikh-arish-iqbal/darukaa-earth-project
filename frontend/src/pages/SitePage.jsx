@@ -43,7 +43,9 @@ export default function SitePage() {
     return (
       <>
         <Navbar />
-        <div className="loading"><div className="spinner" /> Loading site...</div>
+        <div className="loading">
+          <div className="spinner" /> Loading site...
+        </div>
       </>
     );
   }
@@ -62,7 +64,9 @@ export default function SitePage() {
   }
 
   const createdDate = new Date(site.created_at).toLocaleDateString("en-US", {
-    year: "numeric", month: "long", day: "numeric",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   return (

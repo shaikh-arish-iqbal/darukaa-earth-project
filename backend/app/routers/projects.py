@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
 from typing import List
 
-from app.database import get_db
-from app.models.user import User
-from app.models.project import Project
-from app.schemas.project import ProjectCreate, ProjectResponse
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
 from app.auth.jwt import get_current_user
+from app.database import get_db
+from app.models.project import Project
+from app.models.user import User
+from app.schemas.project import ProjectCreate, ProjectResponse
 
 router = APIRouter(prefix="/projects", tags=["Projects"])
 
@@ -56,10 +57,14 @@ def get_project(
     current_user: User = Depends(get_current_user),
 ):
     """Get a single project by ID. Only the owner can access it."""
-    project = db.query(Project).filter(
-        Project.id == project_id,
-        Project.user_id == current_user.id,
-    ).first()
+    project = (
+        db.query(Project)
+        .filter(
+            Project.id == project_id,
+            Project.user_id == current_user.id,
+        )
+        .first()
+    )
 
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
@@ -76,10 +81,14 @@ def delete_project(
     current_user: User = Depends(get_current_user),
 ):
     """Delete a project and all its sites."""
-    project = db.query(Project).filter(
-        Project.id == project_id,
-        Project.user_id == current_user.id,
-    ).first()
+    project = (
+        db.query(Project)
+        .filter(
+            Project.id == project_id,
+            Project.user_id == current_user.id,
+        )
+        .first()
+    )
 
     if not project:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")

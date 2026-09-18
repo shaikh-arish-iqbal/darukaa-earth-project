@@ -68,7 +68,9 @@ export default function ProjectPage() {
     return (
       <>
         <Navbar />
-        <div className="loading"><div className="spinner" /> Loading project...</div>
+        <div className="loading">
+          <div className="spinner" /> Loading project...
+        </div>
       </>
     );
   }
@@ -78,7 +80,9 @@ export default function ProjectPage() {
       <>
         <Navbar />
         <div className="page-container">
-          <div className="alert alert-error" style={{ marginTop: "24px" }}>{error}</div>
+          <div className="alert alert-error" style={{ marginTop: "24px" }}>
+            {error}
+          </div>
           <Link to="/dashboard" className="btn btn-secondary" style={{ marginTop: "12px" }}>
             ← Back to Dashboard
           </Link>
@@ -91,14 +95,14 @@ export default function ProjectPage() {
     <>
       <Navbar />
       <div className="page-container">
-        <Link to="/dashboard" className="back-link">← Dashboard</Link>
+        <Link to="/dashboard" className="back-link">
+          ← Dashboard
+        </Link>
 
         <div className="page-header">
           <div>
             <h1>{project.name}</h1>
-            {project.description && (
-              <p>{project.description}</p>
-            )}
+            {project.description && <p>{project.description}</p>}
           </div>
           <button
             id="add-site-btn"

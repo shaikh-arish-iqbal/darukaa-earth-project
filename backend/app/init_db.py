@@ -8,13 +8,14 @@ Usage:
     python -m app.init_db
 """
 
-import sys
 import os
+import sys
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from app.database import engine, Base
+from app.database import Base, engine
+
 # Import all models so Base knows about them
-from app.models import User, Project, Site, SiteAnalytics
 
 
 def init_db():

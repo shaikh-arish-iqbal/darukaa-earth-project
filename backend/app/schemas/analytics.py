@@ -1,7 +1,8 @@
-from pydantic import BaseModel
-from datetime import date, datetime
-from typing import Optional, List
 import uuid
+from datetime import date
+from typing import List, Optional
+
+from pydantic import BaseModel
 
 
 class AnalyticsRecord(BaseModel):

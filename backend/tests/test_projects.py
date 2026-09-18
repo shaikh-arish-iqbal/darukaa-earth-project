@@ -14,10 +14,14 @@ def _register_and_login(client, email="user@test.com", password="pass123"):
 def test_create_project(client):
     """An authenticated user can create a project."""
     headers = _register_and_login(client)
-    response = client.post("/projects", json={
-        "name": "My Forest Project",
-        "description": "Testing project creation",
-    }, headers=headers)
+    response = client.post(
+        "/projects",
+        json={
+            "name": "My Forest Project",
+            "description": "Testing project creation",
+        },
+        headers=headers,
+    )
     assert response.status_code == 201
     data = response.json()
     assert data["name"] == "My Forest Project"

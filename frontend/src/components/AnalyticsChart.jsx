@@ -23,15 +23,7 @@ import {
 } from "chart.js";
 
 // Register Chart.js components (required in Chart.js v3+)
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export default function AnalyticsChart({ records }) {
   if (!records || records.length === 0) {

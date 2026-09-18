@@ -17,57 +17,63 @@ Usage:
     python -m app.seed
 """
 
-import sys
 import os
+import sys
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import json
 import random
 from datetime import date, timedelta
+
 from sqlalchemy import text
 
-from app.database import SessionLocal, engine
-from app.models import User, Project, Site, SiteAnalytics
-from app.database import Base
 from app.auth.jwt import hash_password
-
+from app.database import SessionLocal
+from app.models import Project, Site, SiteAnalytics, User
 
 # ── Demo polygon coordinates (real locations) ──────────────────────────────────
 
 # Amazon rainforest area (Brazil) — approximate polygon
 AMAZON_SITE_1 = {
     "type": "Polygon",
-    "coordinates": [[
-        [-60.025, -3.106],
-        [-59.876, -3.106],
-        [-59.876, -3.245],
-        [-60.025, -3.245],
-        [-60.025, -3.106],
-    ]]
+    "coordinates": [
+        [
+            [-60.025, -3.106],
+            [-59.876, -3.106],
+            [-59.876, -3.245],
+            [-60.025, -3.245],
+            [-60.025, -3.106],
+        ]
+    ],
 }
 
 # Another Amazon site nearby
 AMAZON_SITE_2 = {
     "type": "Polygon",
-    "coordinates": [[
-        [-59.800, -3.350],
-        [-59.650, -3.350],
-        [-59.650, -3.480],
-        [-59.800, -3.480],
-        [-59.800, -3.350],
-    ]]
+    "coordinates": [
+        [
+            [-59.800, -3.350],
+            [-59.650, -3.350],
+            [-59.650, -3.480],
+            [-59.800, -3.480],
+            [-59.800, -3.350],
+        ]
+    ],
 }
 
 # Borneo forest area (Malaysia) — approximate polygon
 BORNEO_SITE_1 = {
     "type": "Polygon",
-    "coordinates": [[
-        [117.562, 4.980],
-        [117.710, 4.980],
-        [117.710, 4.850],
-        [117.562, 4.850],
-        [117.562, 4.980],
-    ]]
+    "coordinates": [
+        [
+            [117.562, 4.980],
+            [117.710, 4.980],
+            [117.710, 4.850],
+            [117.562, 4.850],
+            [117.562, 4.980],
+        ]
+    ],
 }
 
 
@@ -89,13 +95,17 @@ def generate_analytics(site_id, months=24, base_carbon=12.0, base_ndvi=0.72, bas
         season_factor = 1 + 0.15 * (1 if 4 <= current_date.month <= 9 else -0.5)
         noise = random.uniform(-0.05, 0.05)
 
-        records.append(SiteAnalytics(
-            site_id=site_id,
-            date=current_date,
-            carbon_seq_tonnes=round(base_carbon * season_factor * (1 + noise), 2),
-            ndvi=round(min(1.0, base_ndvi * season_factor * (1 + noise * 0.5)), 4),
-            biodiversity_score=round(min(100.0, base_bio * season_factor * (1 + noise * 0.3)), 1),
-        ))
+        records.append(
+            SiteAnalytics(
+                site_id=site_id,
+                date=current_date,
+                carbon_seq_tonnes=round(base_carbon * season_factor * (1 + noise), 2),
+                ndvi=round(min(1.0, base_ndvi * season_factor * (1 + noise * 0.5)), 4),
+                biodiversity_score=round(
+                    min(100.0, base_bio * season_factor * (1 + noise * 0.3)), 1
+                ),
+            )
+        )
 
     return records
 
@@ -178,9 +188,15 @@ def seed():
 
         print("Generating mock analytics data (24 months per site)...")
         analytics = []
-        analytics += generate_analytics(site_a1.id, months=24, base_carbon=14.5, base_ndvi=0.78, base_bio=72.0)
-        analytics += generate_analytics(site_a2.id, months=24, base_carbon=9.2, base_ndvi=0.65, base_bio=58.0)
-        analytics += generate_analytics(site_b1.id, months=24, base_carbon=16.1, base_ndvi=0.82, base_bio=81.0)
+        analytics += generate_analytics(
+            site_a1.id, months=24, base_carbon=14.5, base_ndvi=0.78, base_bio=72.0
+        )
+        analytics += generate_analytics(
+            site_a2.id, months=24, base_carbon=9.2, base_ndvi=0.65, base_bio=58.0
+        )
+        analytics += generate_analytics(
+            site_b1.id, months=24, base_carbon=16.1, base_ndvi=0.82, base_bio=81.0
+        )
 
         db.add_all(analytics)
         db.commit()
