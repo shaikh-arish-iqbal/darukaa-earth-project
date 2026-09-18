@@ -2,6 +2,8 @@
 Pytest configuration and fixtures shared across all tests.
 """
 
+import os
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -10,11 +12,13 @@ from sqlalchemy.orm import sessionmaker
 from app.database import Base, get_db
 from app.main import app
 
-# Use SQLite in-memory for tests (no PostGIS needed for basic tests)
-# For spatial tests you'd need a real PostGIS database
-TEST_DATABASE_URL = "sqlite:///./test.db"
+# Use the database URL provided by environment (e.g. from CI), or a local test fallback
+TEST_DATABASE_URL = os.getenv(
+    "DATABASE_URL", "postgresql://darukaa:password@localhost:5432/darukaa_test"
+)
 
-engine_test = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
+# Don't use check_same_thread as it is an sqlite-only parameter
+engine_test = create_engine(TEST_DATABASE_URL)
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine_test)
 
 

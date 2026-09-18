@@ -12,6 +12,21 @@ jobs:
     name: Backend (Python)
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgis/postgis:14-3.3
+        env:
+          POSTGRES_USER: darukaa
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: darukaa_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,10 +50,9 @@ jobs:
 
       - name: Run tests
         working-directory: backend
-        # Tests use SQLite (no PostGIS needed in CI)
         run: pytest tests/ -v
         env:
-          DATABASE_URL: sqlite:///./test.db
+          DATABASE_URL: postgresql://darukaa:password@localhost:5432/darukaa_test
           SECRET_KEY: ci-test-secret-key
           ALGORITHM: HS256
           ACCESS_TOKEN_EXPIRE_MINUTES: 60

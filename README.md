@@ -242,7 +242,7 @@ cd backend
 pytest tests/ -v
 ```
 
-Tests use SQLite in-memory (no PostgreSQL needed for tests).
+Tests require a PostGIS database. By default they run against your local database configured in `.env`, or you can set a separate `DATABASE_URL` environment variable for testing.
 
 ### Frontend lint/format
 ```bash
@@ -259,10 +259,11 @@ GitHub Actions runs on every push to `main` and every pull request.
 
 ### Backend job
 1. Checkout code
-2. Install Python dependencies
-3. Run `ruff check .` (linting)
-4. Run `ruff format --check .` (formatting)
-5. Run `pytest tests/ -v` (tests use SQLite, no real DB needed)
+2. Spin up PostGIS service container
+3. Install Python dependencies
+4. Run `ruff check .` (linting)
+5. Run `ruff format --check .` (formatting)
+6. Run `pytest tests/ -v` (against PostGIS container)
 
 ### Frontend job
 1. Checkout code
