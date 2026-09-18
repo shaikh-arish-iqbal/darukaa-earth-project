@@ -10,6 +10,7 @@ services:
   - type: web
     name: darukaa-earth-api
     runtime: python
+    plan: free
     buildCommand: pip install -r backend/requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     rootDir: backend
@@ -29,5 +30,6 @@ databases:
   - name: darukaa-earth-db
     databaseName: darukaa
     user: darukaa
+    plan: free
     # Note: PostGIS extension must be enabled manually in Render's PostgreSQL dashboard
     # Go to: Render Dashboard → PostgreSQL → Shell → run: CREATE EXTENSION postgis;
